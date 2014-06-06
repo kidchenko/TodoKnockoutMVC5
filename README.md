@@ -26,8 +26,12 @@ Faça o download em zip/clone. Abra a solução e execute o projeto.
 
 [Knockout.js] (http://knockoutjs.com/)
 
+[TodoMVC] (http://todomvc.com/)
+
 
 ##Dúvidas? 
 
 Manda um oi no twitter [@__kide] (https://twitter.com/__kide) | [@lnmunhoz] (https://twitter.com/lnmunhoz)
 
+
+Fork me and pull request!
