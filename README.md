@@ -1,4 +1,14 @@
 TodoKnockoutMVC5
 ================
 
-Todo project using ASP. NET MVC 5 and Knockout.JS for dojo at .Net Coders in 05/30/2014
+Projeto de exemplo da palestra do .NET Coders no dia 30/05/2014
+
+Aqui está o client side (Knockout e ASP .NET MVC 5)
+
+Para aprender mais:
+
+http://www.asp.net/
+http://knockoutjs.com/
+
+Dúvidas? Manda um oi no twitter https://twitter.com/__kide
+
