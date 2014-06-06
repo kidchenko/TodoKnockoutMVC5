@@ -1,0 +1,98 @@
+﻿@model IList<TodoKnockout.Models.Todo>
+<div class="row">
+    <div class="well col-md-4 col-md-offset-4">
+        <h1>Todo</h1>
+        <form data-bind="submit: addTodo">
+            <input data-bind="value: newTodoText" placeholder="Novo item" class="form-control" autofocus>
+        </form>
+        <hr />
+        <ul data-bind="foreach: todos" class="list-group">
+            <li class="list-group-item">
+                <div class="checkbox">
+                    <input type="checkbox" data-bind="checked: done, click: $root.checkedDone" />
+                    <label data-bind="text: title">
+                    </label>
+                    <a href="#" data-bind="click: $root.deleteTodo" class="pull-right"><span class="glyphicon glyphicon-remove text-danger"></span></a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        
+        // Essa é uma classe JS que representa representa uma tarefa (um item da lista).
+        // No knockout ela representa o Model (M do MVVM).
+        // São objetos dessa classe que são enviados e recebidos do servidor.
+        var Todo = function (done, title, id) {
+            this.id = id;
+            this.done = ko.observable(done);
+            this.title = ko.observable(title);
+        }
+
+        // Essa é outra classe JS que representa o seu modelo de apresentação
+        // No knockout ela representa o ViewModel (VM do MVVM).
+        // Ela é responsável pela lógica de apresentação. 
+        // A sua responsabilidade é coordenar o comportamento entre a View e a Model.
+        // No construtor ela recebe uma lista de objetos Todo.
+        var ViewModel = function (todos) {
+            // Aqui eu crio um referência para o viewModel.
+            var self = this;
+
+            // Essa variavel representa o texto do novo (novo todo).
+            this.newTodoText = ko.observable();
+            
+            // Essa variavel representa a lista de todos
+            // Aqui fazemos um map do array que recebemos no construtor
+            // Fazendo com que a lista seja preenchida.
+            this.todos = ko.observableArray(todos.map(function(todo) {
+                return new Todo(todo.Done, todo.Title, todo.Id);
+            }));
+
+            // Ao ser clicada essa função faz post para o server
+            // Para adicionar um novo Todo.
+            // Após a request ela adiciona o Todo na lista no cliente.
+            this.addTodo = function () {
+                var newTodoText = this.newTodoText().trim();
+                if (newTodoText) {
+                    $.post('/Todo/Add', { title: newTodoText }, function (data) {
+                        self.newTodoText(''); // LIMPA O TEXTO DO NOVO TODO
+                        self.todos.push(new Todo(false, newTodoText, '', data.Id));
+                    });
+                }
+            }
+            
+            // Essa função faz um post para o server
+            // Para marcar o Todo como done (feito).
+            this.checkedDone = function (item) {
+                var model = ko.toJS(item); // Parse do knockout para JS 
+                $.post('/Todo/Edit', model, function(data) {
+                    // Não precisamos alterar o cliente aqui, pois isso é feito
+                    // pelo bind checked no checkbox
+                    // apenas ignoramos o callback.
+                });
+                // IMPORTANTE!! Toda vez que um bing click for atribuido
+                // para um checkbox, deve retornar true, caso contrário 
+                // o checked no checkbox não será feito
+                return true; 
+            }
+
+            // Quando o usuário clicar no ícone de deletar será disparado
+            // Essa função que irá fazer um post para o servidor, remover
+            // o Todo no server e depois remover o Todo do cliente.
+            this.deleteTodo = function (item) {
+                var id = item.id; // Recupera o Id do Todo
+                $.post('/Todo/Delete', {id : id}, function(data) {
+                    self.todos.remove(item);
+                });
+            }
+        }.bind(this);
+        var model = @Html.Raw(Json.Encode(Model));
+        var viewModel = new ViewModel(model || []);
+        ko.applyBindings(viewModel);
+    </script>
+}
