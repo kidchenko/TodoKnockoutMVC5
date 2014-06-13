@@ -2,7 +2,7 @@
 
 Projeto de exemplo da palestra do .NET Coders no dia 30/05/2014 (Noite do ASP MVC + KnockoutJS e MongoDB)
 
-No projeto está a parte client side (Knockout e ASP .NET MVC 5) - do HTML até o Controller. Foi utilizado um mock para o banco de dados.
+Neste projeto está a parte client side (Knockout e ASP .NET MVC 5) - do HTML até o Controller. Foi utilizado um mock para o banco de dados.
 
 ##Slides da palestra
 
