@@ -31,7 +31,7 @@ Faça o download em zip/clone. Abra a solução e execute o projeto.
 
 ##Dúvidas? 
 
-Manda um oi no twitter [@__kide] (https://twitter.com/__kide) | [@lnmunhoz] (https://twitter.com/lnmunhoz)
+Manda um oi no twitter [@_kiide] (https://twitter.com/_kiide) | [@lnmunhoz] (https://twitter.com/lnmunhoz)
 
 
 Fork me and pull request!
